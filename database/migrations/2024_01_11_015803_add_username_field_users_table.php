@@ -8,21 +8,31 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::table('users',function (Blueprint $table){
-            $table->string('username')->after('name');
-        });
+        // Pastikan kolom 'usertype' belum ada sebelum menambahkannya
+        if (!Schema::hasColumn('users', 'usertype')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('usertype')->default('user');
+            });
+        }
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::table('users',function (Blueprint $table){
-            $table->dropColumn("username");
-        });
+        // Hapus kolom 'usertype' jika ada
+        if (Schema::hasColumn('users', 'usertype')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('usertype');
+            });
+        }
     }
 };
