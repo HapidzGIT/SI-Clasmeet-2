@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,6 +42,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //  // Admin routes
+    //  Route::middleware(['admin'])->group(function () {
+    //     Route::get('/admin', [HomeController::class, 'index'])->name('admin.admin');
+    //     // Add other admin routes as needed
+
+    Route::get('/admin', [HomeController::class, 'index'])->name('admin.admin');
 });
 
 require __DIR__.'/auth.php';
